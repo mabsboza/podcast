@@ -14,12 +14,14 @@ export default class  extends
     return (
       <div>
         <header>Podcast</header>
-        { channels.map((channel) => (
-          <div className="channel">
-            <img src={ channel.urls.logo_image.original } alt="podcast_image" />
-            <h2>{ channel.title }</h2>
-          </div>
-        )) }
+        <div className="channels">
+          { channels.map((channel) => (
+            <div className="channel">
+              <img src={ channel.urls.logo_image.original } alt="podcast_image" />
+              <h2>{ channel.title }</h2>
+            </div>
+          )) }
+        </div>
         <style jsx>{`
           header {
             color: #ffff;
