@@ -1,5 +1,6 @@
 
 import 'isomorphic-fetch'
+import Link from 'next/Link'
 
 export default class  extends
  React.Component {
@@ -14,14 +15,17 @@ export default class  extends
     return (
       <div>
         <header>Podcast</header>
-        <div className="channels">
-          { channels.map((channel) => (
-            <div className="channel">
-              <img src={ channel.urls.logo_image.original } alt="podcast_image" />
-              <h2>{ channel.title }</h2>
-            </div>
-          )) }
-        </div>
+        
+          <div className="channels">
+            { channels.map((channel) => (
+              <Link href={`/channel?id=${channel.id}`}>
+                <div className="channel">
+                  <img src={ channel.urls.logo_image.original } alt="podcast_image" />
+                  <h2>{ channel.title }</h2>
+                </div>
+              </Link>
+            )) }
+          </div>
         <style jsx>{`
           header {
             color: #ffff;
