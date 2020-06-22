@@ -5,9 +5,13 @@ import ChannelGrid from '../components/ChannelGrid'
 export default class extends React.Component {
 
   static async getInitialProps() {
-    let req = await fetch('https://api.audioboom.com/channels/recommended')
-    let { body: channels } = await req.json()
-    return { channels }
+    try {
+      let req = await fetch('https://api.audioboom.com/channels/recommended')
+      let { body: channels } = await req.json()
+      return { channels }
+    } catch (e) {
+      return { channels: null, statusCode: 503 }
+    }
   }
 
   render() {
