@@ -1,20 +1,36 @@
 import 'isomorphic-fetch'
 import Link from 'next/link'
+import Layout from '../components/Layout'
+import Error from 'next/error'
 
 export default class extends React.Component {
 
-  static async getInitialProps ({ query }) {
+  static async getInitialProps ({ query, res }) {
     let id = query.id
-    let fetchClip = await fetch(`https://api.audioboom.com/audio_clips/${id}.mp3`)
-    let clip = (await fetchClip.json()).body.audio_clip
-    return { clip }
+    try {
+      let fetchClip = await fetch(`https://api.audioboom.com/audio_clips/${id}.mp3`)
+
+      if( fetchClip.status >= 400 ) {
+        res.statusCode = fetchClip.status
+        return { clip: null, statusCode: fetchClip.status }
+      }
+
+      let clip = (await fetchClip.json()).body.audio_clip
+
+      return { clip, statusCode: 200 }
+    } catch(e) {
+      return { clip: null, statusCode: 503 }
+    }
   }
 
   render() {
-    const { clip } = this.props
+    const { clip, statusCode } = this.props
 
-    return <div>
-      <header>Podcasts</header>
+    if( statusCode !== 200 ) {
+      return <Error statusCode={ statusCode } />
+    }
+
+    return <Layout title={clip.title}>
 
       <div className='modal'>
         <div className='clip'>
@@ -23,6 +39,7 @@ export default class extends React.Component {
               <a className='close'>&lt; Volver</a>
             </Link>
           </nav>
+
           <picture>
             <div style={{ backgroundImage: `url(${clip.urls.image || clip.channel.urls.logo_image.original})` }} />
           </picture>
@@ -30,7 +47,7 @@ export default class extends React.Component {
           <div className='player'>
             <h3>{ clip.title }</h3>
             <h6>{ clip.channel.title }</h6>
-            <audio controls autoPlay={false}>
+            <audio controls autoPlay={true}>
               <source src={clip.urls.high_mp3} type='audio/mpeg' />
             </audio>
           </div>
@@ -97,14 +114,6 @@ export default class extends React.Component {
           z-index: 99999;
         }
       `}</style>
-
-      <style jsx global>{`
-        body {
-          margin: 0;
-          font-family: system-ui;
-          background: white;
-        }
-      `}</style>
-    </div>
+    </Layout>
   }
 }
