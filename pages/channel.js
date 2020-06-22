@@ -27,12 +27,13 @@ export default class extends React.Component {
     const { channel, audioClips, series } = this.props
 
     return <div>
-      <header>Podcasts
-        <nav>
-          <Link href={`/index`}>
-            <a className='close'>&lt; Volver</a>
+      <header>
+        <nav className='navtop'>
+          <Link href={`/`}>
+            <a>&lt; Volver</a>
           </Link>
         </nav>
+        Podcasts
       </header>
       <div className="banner" style={{ backgroundImage: `url(${channel.urls.banner_image.original})` }} />
 
@@ -130,6 +131,12 @@ export default class extends React.Component {
           color: #666;
           margin-top: 0.5em;
           font-size: 0.8em;
+        }
+        .navtop {
+          float: left;
+          color: #f2f2f2;
+          text-decoration: none;
+          font-size: 17px;
         }
       `}</style>
 
