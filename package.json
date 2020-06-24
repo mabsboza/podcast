@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "next start"
+    "dev": "node server.js",
+    "start": "NODE_ENV=production node server.js",
+    "build": "next build"
   },
   "keywords": [],
   "author": "",
@@ -14,7 +14,9 @@
   "dependencies": {
     "isomorphic-fetch": "^2.2.1",
     "next": "^9.4.4",
+    "next-routes": "^1.4.2",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "slugify": "^1.4.2"
   }
 }
