@@ -2,6 +2,8 @@
 
 This is a mini project to listen podcast from *audioboom api* 
 
+To see the app running https://nextjs-podcast-ten.vercel.app/
+
 ### Technology Stack
 
 - ReactJS (https://reactjs.org/)
